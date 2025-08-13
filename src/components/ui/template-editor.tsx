@@ -160,61 +160,6 @@ export function TemplateEditor({
         </Button>
       </div>
 
-      {/* Template Library */}
-      {templates.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <FolderOpen className="h-4 w-4" />
-              Template Library
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-2 max-h-48 overflow-y-auto">
-              {templates.map((template) => (
-                <div
-                  key={template.id}
-                  className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-medium text-sm truncate">{template.name}</h4>
-                      <span className="text-xs px-2 py-1 bg-secondary rounded-full text-muted-foreground">
-                        {template.category}
-                      </span>
-                    </div>
-                    {template.description && (
-                      <p className="text-xs text-muted-foreground truncate">
-                        {template.description}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1 ml-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleLoadTemplate(template)}
-                      className="h-7 w-7 p-0"
-                      title="Load template"
-                    >
-                      <FolderOpen className="h-3 w-3" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDeleteTemplate(template.id)}
-                      className="h-7 w-7 p-0 text-destructive hover:text-destructive"
-                      title="Delete template"
-                    >
-                      <X className="h-3 w-3" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }

@@ -48,8 +48,8 @@ export function Sidebar({
         <ThemeToggle />
       </div>
       
-      <ScrollArea className="flex-1 px-3 sm:px-4 py-4">
-        <div className="space-y-4 sm:space-y-6">
+      <ScrollArea className="flex-1 px-0 sm:pe-0 py-4 overflow-y-auto">
+        <div className="space-y-4 sm:space-y-6 pb-6">
           {/* Model Selection */}
           <Card className="border-sidebar-border bg-sidebar-accent">
             <CardHeader className="pb-3">

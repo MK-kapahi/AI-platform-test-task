@@ -177,7 +177,7 @@ export function ParametersPanel({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-4">
       {/* Temperature Parameter */}
       <Card>
         <CardHeader className="pb-3">
@@ -186,7 +186,7 @@ export function ParametersPanel({
             <CardTitle className="text-base">Temperature</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 pb-2">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="temperature-slider" className="text-sm">
@@ -208,7 +208,7 @@ export function ParametersPanel({
               aria-describedby="temperature-description"
               aria-valuetext={`Temperature: ${localTemperature}, ${getTemperatureLabel(localTemperature)}`}
             />
-            <div id="temperature-description" className="text-xs text-muted-foreground">
+            <div id="temperature-description" className="text-xs text-muted-foreground pb-1">
               Controls randomness: Lower values are more focused, higher values are more creative
             </div>
           </div>
