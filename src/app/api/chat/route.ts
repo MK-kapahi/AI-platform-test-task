@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server'
 
+export const dynamic = 'force-static'
+
 export interface ChatRequest {
   prompt: string
   model: string
   temperature: number
   maxTokens: number
+  topP: number
+  frequencyPenalty: number
+  presencePenalty: number
 }
 
 export interface ChatResponse {
@@ -14,6 +19,9 @@ export interface ChatResponse {
   model: string
   temperature: number
   maxTokens: number
+  topP: number
+  frequencyPenalty: number
+  presencePenalty: number
   timestamp: string
   usage: {
     promptTokens: number
@@ -25,7 +33,7 @@ export interface ChatResponse {
 export async function POST(request: Request) {
   try {
     const body: ChatRequest = await request.json()
-    const { prompt, model, temperature, maxTokens } = body
+    const { prompt, model, temperature, maxTokens, topP, frequencyPenalty, presencePenalty } = body
 
     if (!prompt) {
       return NextResponse.json(
@@ -38,7 +46,7 @@ export async function POST(request: Request) {
     await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000))
 
     // Generate mock response based on parameters
-    const mockResponse = generateMockResponse(prompt, model, temperature, maxTokens)
+    const mockResponse = generateMockResponse(prompt, model, temperature, maxTokens, topP, frequencyPenalty, presencePenalty)
     
     // Calculate mock token usage
     const promptTokens = Math.ceil(prompt.length / 4)
@@ -52,6 +60,9 @@ export async function POST(request: Request) {
       model,
       temperature,
       maxTokens,
+      topP,
+      frequencyPenalty,
+      presencePenalty,
       timestamp: new Date().toISOString(),
       usage: {
         promptTokens,
@@ -69,18 +80,18 @@ export async function POST(request: Request) {
   }
 }
 
-function generateMockResponse(prompt: string, model: string, temperature: number, maxTokens: number): string {
-  const responses = [
-    `Thank you for your prompt: "${prompt}". I understand you're using the ${model} model with temperature ${temperature} and max tokens ${maxTokens}. Here's my response based on your request...`,
-    
-    `Based on your input "${prompt}", I can provide the following analysis using ${model}. With a temperature setting of ${temperature}, I'll balance creativity and precision. Here's what I found...`,
-    
-    `I've processed your request: "${prompt}" using the ${model} model. The temperature of ${temperature} allows for ${temperature > 0.7 ? 'creative' : temperature > 0.4 ? 'balanced' : 'precise'} responses. Here's my detailed answer...`,
-    
-    `Your prompt "${prompt}" has been analyzed with the ${model} model. The current settings (temperature: ${temperature}, max tokens: ${maxTokens}) will produce ${temperature > 0.6 ? 'more varied' : 'more consistent'} outputs. Here's my response...`,
-    
-    `Processing "${prompt}" with ${model} at temperature ${temperature}. This configuration will result in ${temperature > 0.8 ? 'highly creative' : temperature > 0.5 ? 'moderately creative' : 'factual'} responses. Here's what I can tell you...`
-  ]
+function generateMockResponse(prompt: string, model: string, temperature: number, maxTokens: number, topP: number, frequencyPenalty: number, presencePenalty: number): string {
+      const responses = [
+      `Thank you for your prompt: "${prompt}". I understand you're using the ${model} model with temperature ${temperature}, top P ${topP}, frequency penalty ${frequencyPenalty}, and presence penalty ${presencePenalty}. Here's my response based on your request...`,
+      
+      `Based on your input "${prompt}", I can provide the following analysis using ${model}. With temperature ${temperature}, top P ${topP}, and penalties (freq: ${frequencyPenalty}, pres: ${presencePenalty}), I'll balance creativity and precision. Here's what I found...`,
+      
+      `I've processed your request: "${prompt}" using the ${model} model. The settings (temp: ${temperature}, top P: ${topP}, freq penalty: ${frequencyPenalty}, pres penalty: ${presencePenalty}) allow for ${temperature > 0.7 ? 'creative' : temperature > 0.4 ? 'balanced' : 'precise'} responses. Here's my detailed answer...`,
+      
+      `Your prompt "${prompt}" has been analyzed with the ${model} model. The current configuration will produce ${temperature > 0.6 ? 'more varied' : 'more consistent'} outputs with ${topP > 0.7 ? 'diverse' : 'focused'} sampling. Here's my response...`,
+      
+      `Processing "${prompt}" with ${model}. This configuration (temp: ${temperature}, top P: ${topP}, penalties: ${frequencyPenalty}/${presencePenalty}) will result in ${temperature > 0.8 ? 'highly creative' : temperature > 0.5 ? 'moderately creative' : 'factual'} responses. Here's what I can tell you...`
+    ]
 
   // Select response based on temperature
   let baseResponse = responses[Math.floor(Math.random() * responses.length)]
@@ -93,6 +104,26 @@ function generateMockResponse(prompt: string, model: string, temperature: number
   // Add technical details for lower temperature
   if (temperature < 0.4) {
     baseResponse += `\n\n📊 Technical analysis: Based on the parameters provided, this response is optimized for accuracy and consistency.`
+  }
+
+  // Add top P insights
+  if (topP < 0.5) {
+    baseResponse += `\n\n🎯 Focused sampling: With top P ${topP}, the response is highly focused on the most likely tokens.`
+  } else if (topP > 0.8) {
+    baseResponse += `\n\n🌈 Diverse sampling: With top P ${topP}, the response explores a wider range of possibilities.`
+  }
+
+  // Add penalty insights
+  if (frequencyPenalty > 0.5) {
+    baseResponse += `\n\n🔄 Anti-repetition: Frequency penalty ${frequencyPenalty} helps avoid repetitive language.`
+  } else if (frequencyPenalty < -0.5) {
+    baseResponse += `\n\n🔄 Repetition-friendly: Frequency penalty ${frequencyPenalty} allows for more repetitive patterns.`
+  }
+
+  if (presencePenalty > 0.5) {
+    baseResponse += `\n\n🌍 Topic diversity: Presence penalty ${presencePenalty} encourages exploring new topics.`
+  } else if (presencePenalty < -0.5) {
+    baseResponse += `\n\n🎯 Topic focus: Presence penalty ${presencePenalty} encourages staying on the current topic.`
   }
 
   // Add model-specific information

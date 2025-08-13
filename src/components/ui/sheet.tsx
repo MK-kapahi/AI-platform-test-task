@@ -74,9 +74,11 @@ const SheetContent = React.forwardRef<
       className={cn(sheetVariants({ side }), className)}
       aria-label={ariaLabel}
       aria-describedby={ariaDescribedby}
+      onOpenAutoFocus={(e) => e.preventDefault()}
+      onCloseAutoFocus={(e) => e.preventDefault()}
       {...props}
     >
-      <div>
+      <div className="h-full overflow-hidden">
         {children}
       </div>
       <SheetPrimitive.Close asChild>

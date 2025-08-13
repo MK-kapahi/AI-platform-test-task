@@ -100,6 +100,18 @@
     @apply border-border;
   }
 
+  /* Ensure sidebar has proper z-index stacking */
+  .sidebar-container {
+    z-index: 20;
+    position: relative;
+  }
+
+  /* Ensure sliders don't interfere with sidebar */
+  .slider-container {
+    z-index: 1;
+    position: relative;
+  }
+
   body {
     @apply bg-background text-foreground;
   }

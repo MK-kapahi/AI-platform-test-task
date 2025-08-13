@@ -1,46 +1,28 @@
-# AI Interface
+# AI Interface - Next.js 13+ AI Chat Application
 
-A modern, responsive AI chat interface built with Next.js, TypeScript, and Tailwind CSS. This application provides a ChatGPT-like experience with advanced features for managing conversations, templates, and AI model parameters.
+A modern, responsive AI interface built with Next.js 13+, TypeScript, and Tailwind CSS. Features a comprehensive chat interface with advanced parameter controls, template management, and mobile-responsive design.
 
 ## ✨ Features
 
-### 🚀 Core Functionality
-- **Real-time AI Chat**: Interactive conversations with AI models
-- **Multiple Chat Management**: Create, switch, and manage multiple conversations
-- **Auto-scroll**: Automatic scrolling to latest messages
-- **Message History**: Persistent chat history during session
-- **Template System**: Save and load reusable prompt templates
+### 🎯 Core Functionality
+- **AI Chat Interface**: Real-time chat with AI models
+- **Model Selection**: Choose from multiple AI models (GPT-4o, Claude 3, Gemini Pro, etc.)
+- **Advanced Parameters**: Full control over temperature, max tokens, top P, frequency penalty, and presence penalty
+- **Template Management**: Save, load, and organize prompt templates
+- **Chat History**: Persistent chat sessions with export functionality
 
-### 🎨 Modern UI/UX
-- **ChatGPT-like Interface**: Familiar layout and interactions
-- **Responsive Design**: Optimized for mobile, tablet, and desktop
-- **Dark/Light Theme**: Toggle between themes with persistent storage
-- **Smooth Animations**: Framer Motion powered transitions
-- **Accessibility**: ARIA labels and keyboard navigation
+### 🎨 User Experience
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Dark/Light Theme**: Built-in theme switching with system preference detection
+- **Template Library**: 8 predefined templates + custom template saving
+- **Quick Actions**: One-click template loading and chat export
+- **Keyboard Shortcuts**: Enter to send, Shift+Enter for new lines
 
-### ⚙️ Advanced Settings
-- **Model Selection**: Choose from different AI models (GPT-4, Claude, etc.)
-- **Parameter Control**: Adjust temperature and max tokens
-- **Real-time Updates**: Settings apply immediately to conversations
-- **Scrollable Settings**: Organized settings with proper scrolling
-
-### 📱 Responsive Design
-- **Mobile-First**: Optimized for mobile devices
-- **Collapsible Sidebar**: Slide-out navigation on mobile
-- **Touch-Friendly**: Large touch targets and gestures
-- **Adaptive Layout**: Content adjusts to screen size
-- **Cross-Platform**: Works on all devices and browsers
-
-## 🛠️ Technology Stack
-
-- **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript (strict mode)
-- **Styling**: Tailwind CSS v3 with custom design system
-- **UI Components**: Shadcn/ui with Radix UI primitives
-- **Animations**: Framer Motion
-- **State Management**: React hooks with local storage
-- **Icons**: Lucide React
-- **Documentation**: Storybook for component development
+### 📱 Mobile Responsiveness
+- **Collapsible Sidebar**: Mobile-friendly navigation with slide-out menu
+- **Touch Optimized**: Responsive controls and touch-friendly interface
+- **Adaptive Layout**: Automatically adjusts to screen size
+- **Mobile-First**: Designed with mobile users in mind
 
 ## 🚀 Getting Started
 
@@ -49,161 +31,151 @@ A modern, responsive AI chat interface built with Next.js, TypeScript, and Tailw
 - npm or yarn
 
 ### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd ai-interface
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Additional Commands
-
 ```bash
-# Build for production
+# Clone the repository
+git clone <your-repo-url>
+cd ai-interface
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+### Build for Production
+```bash
 npm run build
-
-# Start production server
 npm start
-
-# Run Storybook
-npm run storybook
-
-# Build Storybook
-npm run build-storybook
-
-# Lint code
-npm run lint
 ```
 
-## 📖 Usage Guide
+## 🏗️ Architecture
 
-### Creating a New Chat
-1. Click the "New chat" button in the sidebar
-2. A fresh conversation will be created with a welcome message
-3. Start typing your prompt in the input area
-
-### Managing Conversations
-- **Switch Chats**: Click any chat in the sidebar to switch
-- **Chat Titles**: Automatically update based on first user message
-- **Chat History**: All conversations persist during the session
-
-### Using Templates
-1. **Save Template**: Type a prompt and click "Save Template"
-2. **Load Template**: Click "Load Template" to see available templates
-3. **Apply Template**: Click any template to load it into the prompt editor
-
-### Adjusting Settings
-- **Model Selection**: Choose your preferred AI model
-- **Temperature**: Control creativity (0.0 = focused, 1.0 = creative)
-- **Max Tokens**: Set maximum response length
-- **Real-time**: Changes apply immediately to new messages
-
-### Responsive Features
-- **Mobile**: Tap menu button to open sidebar
-- **Tablet**: Sidebar adapts to available space
-- **Desktop**: Full sidebar always visible
-- **Touch**: Swipe gestures and touch-friendly controls
-
-## 🎯 Key Components
-
-### Chat Interface
-- **Message Display**: User and AI messages with timestamps
-- **Auto-scroll**: Automatically scrolls to new messages
-- **Copy/Download**: Copy messages or download as JSON
-- **Model Badges**: Shows which model generated each response
-
-### Sidebar Navigation
-- **Chat History**: List of all conversations
-- **New Chat**: Create fresh conversations
-- **Settings Panel**: Model and parameter controls
-- **Template Management**: Save and load prompt templates
-
-### Prompt Editor
-- **Fixed Position**: Always accessible at bottom
-- **Character Count**: Real-time character tracking
-- **Keyboard Shortcuts**: Ctrl+Enter to send
-- **Template Integration**: Load saved templates
-
-## 🔧 Configuration
-
-### Environment Variables
-Create a `.env.local` file in the root directory:
-
-```env
-# API Configuration
-NEXT_PUBLIC_API_URL=your_api_url
-
-# Theme Configuration
-NEXT_PUBLIC_DEFAULT_THEME=system
+### File Structure
+```
+src/
+├── app/                    # Next.js 13+ app directory
+│   ├── api/               # API routes
+│   │   ├── chat/         # Chat endpoint
+│   │   ├── models/       # Model definitions
+│   │   └── templates/    # Template management
+│   ├── globals.css       # Global styles
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Main page
+├── components/            # React components
+│   ├── ui/               # Reusable UI components
+│   ├── Sidebar.tsx       # Main sidebar component
+│   └── ChatArea.tsx      # Chat interface component
+└── lib/                  # Utility functions
+    └── theme-provider.tsx # Theme management
 ```
 
-### Tailwind Configuration
-The project uses a custom Tailwind configuration with:
-- Custom color palette
-- Responsive breakpoints
-- Animation utilities
-- Dark mode support
+### Key Components
 
-### Storybook Configuration
-Storybook is configured for component development:
-- Component documentation
-- Interactive stories
-- Responsive testing
-- Accessibility testing
+#### Sidebar Component
+- **Model Selection**: Dropdown for AI model selection
+- **Parameter Controls**: Advanced parameter adjustment panels
+- **Theme Toggle**: Located in the header for easy access
+- **Responsive Design**: Adapts to different screen sizes
+
+#### ChatArea Component
+- **Message Display**: User and AI message rendering
+- **Template Button**: Quick access to template library
+- **Prompt Editor**: Textarea with template integration
+- **Export Functionality**: Download chat history as JSON
+
+#### Template System
+- **Predefined Templates**: 8 ready-to-use prompt templates
+- **Custom Templates**: Save and organize your own templates
+- **Quick Loading**: One-click template application
+- **Category Organization**: Organize templates by purpose
+
+## 🎛️ Parameters & Controls
+
+### Temperature (0-1)
+- Controls creativity vs. precision
+- Lower values = more focused, higher values = more creative
+
+### Max Tokens (100-4000)
+- Maximum response length
+- Adjustable with step controls
+
+### Top P (0-1)
+- Nucleus sampling control
+- Lower values = more focused, higher values = more diverse
+
+### Frequency Penalty (-2 to 2)
+- Controls repetition in responses
+- Negative values encourage repetition, positive values discourage it
+
+### Presence Penalty (-2 to 2)
+- Controls topic diversity
+- Negative values encourage staying on topic, positive values encourage new topics
 
 ## 📱 Responsive Breakpoints
 
-- **Mobile**: < 768px (sm)
-- **Tablet**: 768px - 1024px (md-lg)
-- **Desktop**: > 1024px (lg+)
+- **Mobile**: < 640px (sm)
+- **Tablet**: 640px - 1024px (sm to lg)
+- **Desktop**: > 1024px (lg)
 
-## 🎨 Design System
+### Mobile Features
+- Collapsible sidebar with slide-out menu
+- Touch-optimized controls
+- Adaptive spacing and typography
+- Full-width mobile sidebar
 
-### Colors
-- **Primary**: Brand colors for buttons and highlights
-- **Secondary**: Supporting colors for backgrounds
-- **Muted**: Subtle colors for borders and text
-- **Accent**: Special colors for alerts and notifications
+## 🎨 Theme System
 
-### Typography
-- **Headings**: Clear hierarchy with proper sizing
-- **Body Text**: Readable font sizes and line heights
-- **Code**: Monospace font for code blocks
-- **Labels**: Small, descriptive text
+### Light Theme
+- Clean, professional appearance
+- High contrast for readability
+- Optimized for daytime use
 
-### Spacing
-- **Consistent**: 4px base unit system
-- **Responsive**: Adapts to screen size
-- **Accessible**: Proper touch targets and spacing
+### Dark Theme
+- Easy on the eyes
+- Modern, sleek design
+- Perfect for low-light environments
 
-## 🔍 Accessibility Features
+### System Preference
+- Automatically detects system theme
+- Seamless theme switching
+- Persistent theme selection
 
-- **ARIA Labels**: Proper labeling for screen readers
-- **Keyboard Navigation**: Full keyboard support
-- **Focus Management**: Clear focus indicators
-- **Color Contrast**: WCAG compliant color ratios
-- **Screen Reader**: Optimized for assistive technologies
+## 🔧 Development
 
-## 🚀 Performance Optimizations
+### Scripts
+```bash
+npm run dev          # Development server
+npm run build        # Production build
+npm run start        # Production server
+npm run lint         # ESLint checking
+npm run type-check   # TypeScript checking
+```
 
-- **Code Splitting**: Automatic route-based splitting
-- **Image Optimization**: Next.js image optimization
-- **Bundle Analysis**: Optimized bundle sizes
-- **Lazy Loading**: Components load when needed
-- **Caching**: Efficient caching strategies
+### Storybook
+```bash
+npm run storybook    # Launch Storybook
+npm run build-storybook # Build Storybook
+```
+
+### Code Quality
+- TypeScript strict mode enabled
+- ESLint configuration
+- Prettier formatting
+- Component documentation
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+1. Connect your GitHub repository
+2. Vercel will auto-detect Next.js
+3. Automatic deployments on push
+
+### Other Platforms
+- Netlify
+- AWS Amplify
+- Docker deployment
+- Traditional hosting
 
 ## 🤝 Contributing
 
@@ -213,32 +185,18 @@ Storybook is configured for component development:
 4. Add tests if applicable
 5. Submit a pull request
 
-### Development Guidelines
-- Follow TypeScript strict mode
-- Use Tailwind CSS for styling
-- Write component stories for Storybook
-- Ensure responsive design
-- Test accessibility features
-
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- **Shadcn/ui** for the excellent component library
-- **Tailwind CSS** for the utility-first CSS framework
-- **Framer Motion** for smooth animations
-- **Next.js** for the powerful React framework
-- **Radix UI** for accessible primitives
-
-## 📞 Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the documentation
-- Review the Storybook examples
+- Built with Next.js 13+ App Router
+- UI components from Radix UI
+- Styling with Tailwind CSS
+- Icons from Lucide React
+- Theme management with next-themes
 
 ---
 
-**Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
+**Built with ❤️ using modern web technologies**

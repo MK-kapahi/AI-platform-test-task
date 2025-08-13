@@ -8,7 +8,7 @@ interface ChatMessageProps {
   message: {
     id: string
     content: string
-    role: "user" | "assistant"
+    role: "user" | "user" | "assistant"
     timestamp: Date
     model?: string
     usage?: {
@@ -17,9 +17,10 @@ interface ChatMessageProps {
       totalTokens: number
     }
   }
+  onCopy?: () => void
 }
 
-export function ChatMessage({ message }: ChatMessageProps) {
+export function ChatMessage({ message, onCopy }: ChatMessageProps) {
   const [copied, setCopied] = useState(false)
   const isUser = message.role === "user"
 
@@ -38,6 +39,10 @@ export function ChatMessage({ message }: ChatMessageProps) {
       await navigator.clipboard.writeText(message.content)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+      // Call the onCopy prop if provided
+      if (onCopy) {
+        onCopy()
+      }
     } catch (err) {
       console.error('Failed to copy text: ', err)
     }

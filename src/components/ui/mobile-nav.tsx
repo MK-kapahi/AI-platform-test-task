@@ -13,9 +13,15 @@ interface MobileNavProps {
   selectedModelData: Model | null
   temperature: number
   maxTokens: number
+  topP: number
+  frequencyPenalty: number
+  presencePenalty: number
   onModelChange: (model: string) => void
   onTemperatureChange: (value: number) => void
   onMaxTokensChange: (value: number) => void
+  onTopPChange: (value: number) => void
+  onFrequencyPenaltyChange: (value: number) => void
+  onPresencePenaltyChange: (value: number) => void
 }
 
 export function MobileNav({
@@ -23,9 +29,15 @@ export function MobileNav({
   selectedModelData,
   temperature,
   maxTokens,
+  topP,
+  frequencyPenalty,
+  presencePenalty,
   onModelChange,
   onTemperatureChange,
   onMaxTokensChange,
+  onTopPChange,
+  onFrequencyPenaltyChange,
+  onPresencePenaltyChange,
 }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -83,9 +95,15 @@ export function MobileNav({
               <CardContent>
                 <ParametersPanel
                   temperature={temperature}
-                  maxTokens={Math.min(maxTokens, selectedModelData?.maxTokens || 4000)}
                   onTemperatureChange={onTemperatureChange}
+                  maxTokens={Math.min(maxTokens, selectedModelData?.maxTokens || 4000)}
                   onMaxTokensChange={onMaxTokensChange}
+                  topP={topP}
+                  onTopPChange={onTopPChange}
+                  frequencyPenalty={frequencyPenalty}
+                  onFrequencyPenaltyChange={onFrequencyPenaltyChange}
+                  presencePenalty={presencePenalty}
+                  onPresencePenaltyChange={onPresencePenaltyChange}
                 />
               </CardContent>
             </Card>
