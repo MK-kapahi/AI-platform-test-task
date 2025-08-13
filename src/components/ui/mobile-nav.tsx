@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ModelSelector, type Model } from "@/components/ui/model-selector"
 import { ParametersPanel } from "@/components/ui/parameters-panel"
 import { Menu, X } from "lucide-react"
-import { motion } from "framer-motion"
 
 interface MobileNavProps {
   selectedModel: string
@@ -57,11 +56,7 @@ export function MobileNav({
           <SheetTitle>Settings</SheetTitle>
         </SheetHeader>
         <div className="mt-6 space-y-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
+          <div>
             <Card>
               <CardHeader>
                 <CardTitle>Model Settings</CardTitle>
@@ -73,13 +68,9 @@ export function MobileNav({
                 />
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
-          >
+          <div>
             <Card>
               <CardHeader>
                 <CardTitle>Parameters</CardTitle>
@@ -98,7 +89,7 @@ export function MobileNav({
                 />
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
         <div id="mobile-nav-description" className="sr-only">
           Mobile navigation menu button. Opens settings panel with model selection and parameters.

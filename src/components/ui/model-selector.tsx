@@ -5,7 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { motion } from "framer-motion"
 
 export interface Model {
   id: string
@@ -69,28 +68,20 @@ export function ModelSelector({ selectedModel, onModelChange }: ModelSelectorPro
 
   if (loading) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="space-y-4"
-      >
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="model-select" className="text-sm font-medium">
             Model
           </Label>
           <div className="h-10 rounded-md bg-muted animate-pulse" />
         </div>
-      </motion.div>
+      </div>
     )
   }
 
   if (error) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="space-y-4"
-      >
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="model-select" className="text-sm font-medium">
             Model
@@ -99,17 +90,12 @@ export function ModelSelector({ selectedModel, onModelChange }: ModelSelectorPro
             Error: {error}
           </div>
         </div>
-      </motion.div>
+      </div>
     )
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="space-y-4"
-    >
+    <div className="space-y-4">
       <div className="space-y-2">
         <Label htmlFor="model-select" className="text-sm font-medium">
           Model
@@ -150,11 +136,7 @@ export function ModelSelector({ selectedModel, onModelChange }: ModelSelectorPro
       </div>
 
       {selectedModelData && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
-        >
+        <div>
           <Card>
             <CardContent className="pt-4">
               <div className="space-y-2">
@@ -172,8 +154,8 @@ export function ModelSelector({ selectedModel, onModelChange }: ModelSelectorPro
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   )
 }

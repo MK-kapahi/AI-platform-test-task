@@ -3,7 +3,6 @@
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -38,18 +37,9 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <motion.div
-        whileHover={{ 
-          scale: 1.1,
-          transition: { duration: 0.2, ease: "easeOut" }
-        }}
-        whileFocus={{ 
-          scale: 1.05,
-          transition: { duration: 0.15, ease: "easeOut" }
-        }}
-      >
+      <div>
         <ChevronDown className="h-4 w-4 opacity-50" />
-      </motion.div>
+      </div>
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -106,12 +96,7 @@ const SelectContent = React.forwardRef<
       position={position}
       {...props}
     >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: -10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: -10 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
-      >
+      <div>
         {/* <SelectScrollUpButton /> */}
         <SelectPrimitive.Viewport
         className={cn(
@@ -123,7 +108,7 @@ const SelectContent = React.forwardRef<
           {children}
         </SelectPrimitive.Viewport>
         {/* <SelectScrollDownButton /> */}
-      </motion.div>
+      </div>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ))

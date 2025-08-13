@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Copy, Download, Check } from "lucide-react"
-import { motion } from "framer-motion"
 
 interface ChatMessageProps {
   message: {
@@ -69,10 +68,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+    <div
       className={cn(
         "flex w-full gap-2 sm:gap-4 p-2 sm:p-4",
         isUser ? "justify-end" : "justify-start"
@@ -86,15 +82,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
           isUser ? "items-end" : "items-start"
         )}
       >
-        <motion.div
+        <div
           className={cn(
             "rounded-lg px-3 sm:px-4 py-2 text-sm relative group",
             isUser
               ? "bg-primary text-primary-foreground"
               : "bg-muted text-muted-foreground"
           )}
-          whileHover={{ scale: 1.01 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
         >
           <div 
             className="whitespace-pre-wrap text-xs sm:text-sm"
@@ -136,7 +130,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               Message copied to clipboard
             </div>
           )}
-        </motion.div>
+        </div>
         
         <div className={cn(
           "flex items-center gap-1 sm:gap-2 text-xs text-muted-foreground",
@@ -169,6 +163,6 @@ export function ChatMessage({ message }: ChatMessageProps) {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

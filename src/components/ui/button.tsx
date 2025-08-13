@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { motion, type HTMLMotionProps } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -63,25 +62,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     "data-state": dataState,
     ...props 
   }, ref) => {
-    const Comp = asChild ? Slot : motion.button
-
-    const motionProps: HTMLMotionProps<"button"> = {
-      whileHover: { 
-        scale: 1.02,
-        transition: { duration: 0.2, ease: "easeOut" }
-      },
-      whileTap: { 
-        scale: 0.98,
-        transition: { duration: 0.1, ease: "easeIn" }
-      },
-      whileFocus: {
-        scale: 1.01,
-        transition: { duration: 0.15, ease: "easeOut" }
-      },
-      initial: { opacity: 0, y: 2 },
-      animate: { opacity: 1, y: 0 },
-      transition: { duration: 0.2, ease: "easeOut" }
-    }
+    const Comp = asChild ? Slot : "button"
 
     return (
       <Comp
@@ -94,7 +75,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-haspopup={ariaHaspopup}
         aria-controls={ariaControls}
         data-state={dataState}
-        {...(asChild ? {} : motionProps)}
         {...props}
       >
         {children}

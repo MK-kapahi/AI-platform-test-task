@@ -4,7 +4,6 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -77,34 +76,17 @@ const SheetContent = React.forwardRef<
       aria-describedby={ariaDescribedby}
       {...props}
     >
-      <motion.div
-        initial={{ opacity: 0, x: side === "left" ? -20 : 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: side === "left" ? -20 : 20 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
+      <div>
         {children}
-      </motion.div>
+      </div>
       <SheetPrimitive.Close asChild>
-        <motion.button
+        <button
           className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary"
-          whileHover={{ 
-            scale: 1.1,
-            transition: { duration: 0.2, ease: "easeOut" }
-          }}
-          whileFocus={{ 
-            scale: 1.05,
-            transition: { duration: 0.15, ease: "easeOut" }
-          }}
-          whileTap={{ 
-            scale: 0.95,
-            transition: { duration: 0.1, ease: "easeIn" }
-          }}
           aria-label="Close sheet"
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
-        </motion.button>
+        </button>
       </SheetPrimitive.Close>
     </SheetPrimitive.Content>
   </SheetPortal>
@@ -115,14 +97,11 @@ const SheetHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <motion.div
+  <div
     className={cn(
       "flex flex-col space-y-2 text-center sm:text-left",
       className
     )}
-    initial={{ opacity: 0, y: -10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
     {...props}
   />
 )
@@ -132,14 +111,11 @@ const SheetFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <motion.div
+  <div
     className={cn(
       "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
       className
     )}
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3, delay: 0.2, ease: "easeOut" }}
     {...props}
   />
 )

@@ -3,7 +3,6 @@
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -55,34 +54,17 @@ const DialogContent = React.forwardRef<
       aria-describedby={ariaDescribedby}
       {...props}
     >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
+      <div>
         {children}
-      </motion.div>
+      </div>
       <DialogPrimitive.Close asChild>
-        <motion.button
+        <button
           className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
-          whileHover={{ 
-            scale: 1.1,
-            transition: { duration: 0.2, ease: "easeOut" }
-          }}
-          whileFocus={{ 
-            scale: 1.05,
-            transition: { duration: 0.15, ease: "easeOut" }
-          }}
-          whileTap={{ 
-            scale: 0.95,
-            transition: { duration: 0.1, ease: "easeIn" }
-          }}
           aria-label="Close dialog"
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
-        </motion.button>
+        </button>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
@@ -93,14 +75,11 @@ const DialogHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <motion.div
+  <div
     className={cn(
       "flex flex-col space-y-1.5 text-center sm:text-left",
       className
     )}
-    initial={{ opacity: 0, y: -10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
     {...props}
   />
 )
@@ -110,14 +89,11 @@ const DialogFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <motion.div
+  <div
     className={cn(
       "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
       className
     )}
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3, delay: 0.2, ease: "easeOut" }}
     {...props}
   />
 )
