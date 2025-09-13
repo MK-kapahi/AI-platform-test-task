@@ -39,13 +39,13 @@ export function Sidebar({
   onPresencePenaltyChange,
 }: SidebarProps) {
   return (
-    <div className="flex h-full w-full lg:w-80 flex-col border-r bg-sidebar-background relative z-20 sidebar-container">
-      <div className="flex h-16 items-center justify-between border-b px-4 sm:px-6">
+    <div className="flex h-full w-full lg:w-80 flex-col border-r bg-sidebar-background relative z-10 sidebar-container">
+      <div className="flex h-16 items-center justify-between border-b px-4 sm:px-6  lg:pt-0">
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-sidebar-primary flex-shrink-0" />
           <h1 className="text-base sm:text-lg font-semibold text-sidebar-foreground truncate">AI Interface</h1>
         </div>
-        <div className="flex-shrink-0 ml-2">
+        <div className="flex-shrink-0 ml-2 lg:block hidden">
           <ThemeToggle />
         </div>
       </div>

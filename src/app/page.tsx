@@ -5,7 +5,8 @@ import { Sidebar } from "@/components/Sidebar"
 import { ChatArea } from "@/components/ChatArea"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Menu } from "lucide-react"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { Menu, X } from "lucide-react"
 import type { Model } from "@/components/ui/model-selector"
 import type { Template } from "@/components/ui/template-editor"
 
@@ -33,7 +34,7 @@ interface Chat {
 
 export default function Home() {
   // Model and parameters state
-  const [selectedModel, setSelectedModel] = useState("gpt-4o")
+  const [selectedModel, setSelectedModel] = useState("")
   const [selectedModelData, setSelectedModelData] = useState<Model | null>(null)
   const [temperature, setTemperature] = useState(0.7)
   const [maxTokens, setMaxTokens] = useState(1000)
@@ -152,7 +153,6 @@ export default function Home() {
             content: "Hello! I'm your AI assistant. How can I help you today?",
             role: "assistant",
             timestamp: new Date(),
-            model: "gpt-4o",
             usage: {
               promptTokens: 10,
               completionTokens: 15,
@@ -202,7 +202,7 @@ export default function Home() {
   }
 
   const handleSendMessage = async () => {
-    if (!promptValue.trim() || isThinking) return
+    if (!promptValue.trim() || isThinking || !selectedModel) return
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -327,19 +327,33 @@ export default function Home() {
         />
       </div>
 
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-background border-b flex items-center justify-between px-4 py-3">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setSidebarOpen(true)}
+          className="shadow-md"
+        >
+          <Menu className="h-4 w-4" />
+        </Button>
+        <h1 className="text-lg font-semibold">AI Interface</h1>
+        <ThemeToggle />
+      </div>
+
       {/* Mobile Sidebar */}
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            size="sm"
-            className="lg:hidden fixed top-4 left-4 z-50 shadow-md sm:top-4 sm:left-4"
-          >
-            <Menu className="h-4 w-4" />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-full sm:w-80 p-0 z-50">
+        <SheetContent side="left" className="w-full sm:w-80 p-0 z-50 [&>button]:z-[60] [&>button]:relative">
           <div className="relative h-full">
+            {/* Custom close button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(false)}
+              className="absolute right-4 top-4 z-[70] h-8 w-8"
+            >
+              <X className="h-4 w-4" />
+            </Button>
             <Sidebar
               selectedModel={selectedModel}
               onModelChange={setSelectedModel}
@@ -359,7 +373,7 @@ export default function Home() {
       </Sheet>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col min-w-0 relative z-10">
+      <div className="flex-1 flex flex-col min-w-0 relative z-10 lg:pt-0 pt-16">
         <ChatArea
           messages={messages}
           promptValue={promptValue}
