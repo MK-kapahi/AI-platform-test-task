@@ -106,7 +106,7 @@ export function ModelSelector({ selectedModel, onModelChange }: ModelSelectorPro
             aria-label="Select AI model"
             aria-describedby="model-description"
           >
-            <SelectValue placeholder="Select a model" />
+            <SelectValue placeholder="Choose an AI model..." />
           </SelectTrigger>
           <SelectContent>
             {models.map((model) => (

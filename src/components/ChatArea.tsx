@@ -8,6 +8,7 @@ import { ChatMessage } from "@/components/ui/chat-message"
 import { TemplateEditor, type Template } from "@/components/ui/template-editor"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Send, Copy, Download, FolderOpen } from "lucide-react"
+import { LoadingDots } from "@/components/ui/loading-dots"
 
 interface ChatMessageType {
   id: string
@@ -20,6 +21,7 @@ interface ChatMessageType {
     completionTokens: number
     totalTokens: number
   }
+  isStreaming?: boolean
 }
 
 interface ChatAreaProps {
@@ -102,7 +104,7 @@ export function ChatArea({
     <div className="flex h-full flex-col">
       {/* Header */}
       <div className="flex h-16 items-center justify-between border-b px-4 sm:px-6">
-        <h2 className="text-base sm:text-lg font-semibold">Chat</h2>
+        <h2 className="text-base sm:text-lg font-semibold lg:ml-0 ml-12 sm:ml-14">Chat</h2>
         <div className="flex items-center gap-2">
           {/* Templates Button */}
           <Dialog open={templatesDialogOpen} onOpenChange={setTemplatesDialogOpen}>
@@ -270,13 +272,27 @@ export function ChatArea({
               <p>No messages yet. Start a conversation!</p>
             </div>
           ) : (
-            messages.map((message) => (
-              <ChatMessage
-                key={message.id}
-                message={message}
-                onCopy={() => handleCopyMessage(message.content)}
-              />
-            ))
+            <>
+              {messages.map((message) => (
+                <ChatMessage
+                  key={message.id}
+                  message={message}
+                  onCopy={() => handleCopyMessage(message.content)}
+                />
+              ))}
+              {isThinking && (
+                <div className="flex w-full gap-2 sm:gap-4 p-2 sm:p-4 justify-start">
+                  <div className="flex max-w-[85%] sm:max-w-[80%] flex-col gap-2 items-start">
+                    <div className="rounded-lg px-3 sm:px-4 py-2 text-sm bg-muted text-muted-foreground">
+                      <div className="flex items-center gap-2 text-xs sm:text-sm">
+                        <LoadingDots size="sm" />
+                        <span>AI is thinking...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
           <div ref={messagesEndRef} />
         </div>

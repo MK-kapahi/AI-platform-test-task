@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Copy, Download, Check } from "lucide-react"
+import { StreamingText } from "@/components/ui/streaming-text"
 
 interface ChatMessageProps {
   message: {
@@ -16,6 +17,7 @@ interface ChatMessageProps {
       completionTokens: number
       totalTokens: number
     }
+    isStreaming?: boolean
   }
   onCopy?: () => void
 }
@@ -96,10 +98,18 @@ export function ChatMessage({ message, onCopy }: ChatMessageProps) {
           )}
         >
           <div 
-            className="whitespace-pre-wrap text-xs sm:text-sm"
+            className="text-xs sm:text-sm"
             aria-label={`Message content: ${message.content.substring(0, 100)}${message.content.length > 100 ? '...' : ''}`}
           >
-            {message.content}
+            {!isUser && message.isStreaming ? (
+              <StreamingText 
+                text={message.content}
+                speed={20}
+                className="whitespace-pre-wrap"
+              />
+            ) : (
+              <span className="whitespace-pre-wrap">{message.content}</span>
+            )}
           </div>
           
           {/* Action buttons for assistant messages */}

@@ -20,6 +20,7 @@ interface ChatMessage {
     completionTokens: number
     totalTokens: number
   }
+  isStreaming?: boolean
 }
 
 interface Chat {
@@ -245,26 +246,50 @@ export default function Home() {
 
       if (response.ok) {
         const data = await response.json()
-        const assistantMessage: ChatMessage = {
+        
+        // Create streaming message
+        const streamingMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
           content: data.response,
           role: "assistant",
           timestamp: new Date(),
           model: selectedModel,
           usage: data.usage,
+          isStreaming: true,
         }
 
-        // Add assistant message to chat
-        const finalChats = updatedChats.map(chat => 
+        // Add streaming message to chat
+        const streamingChats = updatedChats.map(chat => 
           chat.id === currentChatId 
             ? {
                 ...chat,
-                messages: [...chat.messages, assistantMessage],
+                messages: [...chat.messages, streamingMessage],
                 updatedAt: new Date()
               }
             : chat
         )
-        setChats(finalChats)
+        setChats(streamingChats)
+
+        // After a delay, mark streaming as complete
+        setTimeout(() => {
+          const finalMessage: ChatMessage = {
+            ...streamingMessage,
+            isStreaming: false,
+          }
+
+          const finalChats = streamingChats.map(chat => 
+            chat.id === currentChatId 
+              ? {
+                  ...chat,
+                  messages: chat.messages.map(msg => 
+                    msg.id === streamingMessage.id ? finalMessage : msg
+                  ),
+                  updatedAt: new Date()
+                }
+              : chat
+          )
+          setChats(finalChats)
+        }, data.response.length * 20) // Simulate streaming duration
       } else {
         const errorData = await response.json()
         setError(errorData.error || 'Failed to get response')
@@ -308,26 +333,28 @@ export default function Home() {
           <Button
             variant="outline"
             size="sm"
-            className="lg:hidden fixed top-4 left-4 z-50"
+            className="lg:hidden fixed top-4 left-4 z-50 shadow-md sm:top-4 sm:left-4"
           >
             <Menu className="h-4 w-4" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-full sm:w-80 p-0 z-50">
-          <Sidebar
-            selectedModel={selectedModel}
-            onModelChange={setSelectedModel}
-            temperature={temperature}
-            onTemperatureChange={setTemperature}
-            maxTokens={maxTokens}
-            onMaxTokensChange={setMaxTokens}
-            topP={topP}
-            onTopPChange={setTopP}
-            frequencyPenalty={frequencyPenalty}
-            onFrequencyPenaltyChange={setFrequencyPenalty}
-            presencePenalty={presencePenalty}
-            onPresencePenaltyChange={setPresencePenalty}
-          />
+          <div className="relative h-full">
+            <Sidebar
+              selectedModel={selectedModel}
+              onModelChange={setSelectedModel}
+              temperature={temperature}
+              onTemperatureChange={setTemperature}
+              maxTokens={maxTokens}
+              onMaxTokensChange={setMaxTokens}
+              topP={topP}
+              onTopPChange={setTopP}
+              frequencyPenalty={frequencyPenalty}
+              onFrequencyPenaltyChange={setFrequencyPenalty}
+              presencePenalty={presencePenalty}
+              onPresencePenaltyChange={setPresencePenalty}
+            />
+          </div>
         </SheetContent>
       </Sheet>
 
